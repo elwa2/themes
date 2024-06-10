@@ -2,6 +2,8 @@ from flask import Flask, request, render_template
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+import webbrowser
+import threading
 
 app = Flask(__name__)
 
@@ -30,14 +32,14 @@ codes_to_names = {
     'themes/1974201424': 'ثيم روية',
     'themes/1660707346': 'ثيم رقمى',
     'themes/581928698': 'ثيم سـيليا',
-    'themes/1753517624': 'ثيم عالي ',
-    'themes/1755865368 ': 'ثيم بوتيك ',
+    'themes/1753517624': 'ثيم عالي',
+    'themes/1755865368 ': 'ثيم بوتيك',
     'themes/1974201424': 'ثيم رؤية',
     'themes/466157229': 'ثيم أكاسيا',
-    'themes/268429610': 'ثيم نور ',
-    'themes/1253916907': 'ثيم تالا ',
-    'themes/724522601': 'ثيم مبدع ',
-    'themes/2048178472': 'ثيم بيوتي ',
+    'themes/268429610': 'ثيم نور',
+    'themes/1253916907': 'ثيم تالا',
+    'themes/724522601': 'ثيم مبدع',
+    'themes/2048178472': 'ثيم بيوتي',
     'themes/1048198927': 'ثيم شوبنج',
     'themes/2093313756': 'ثيم يافا',
     'themes/2142196958': 'ثيم بريق',
@@ -55,14 +57,11 @@ codes_to_names = {
     'themes/822457965': 'ثيم عطاء',
     'themes/1546328629': 'ثيم سمارت',
     'themes/0000000': 'ثيم 00000'
-
 }
-
 
 @app.route('/')
 def home():
     return render_template('index.html')
-
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -81,6 +80,9 @@ def search():
 
     return render_template('index.html', result=found_names)
 
+def open_browser():
+    webbrowser.open_new('http://127.0.0.1:5000')
 
 if __name__ == '__main__':
+    threading.Timer(1.25, open_browser).start()
     app.run(debug=True)
